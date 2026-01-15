@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YOLO Live Detection</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>YOLO Video Detection</h1>
+
+    <form id="videoForm" enctype="multipart/form-data">
+        <input type="file" name="video" required>
+        <button type="submit">Start Detection</button>
+    </form>
+
+    <!-- 🔥 src EMPTY initially -->
+    <div class="video-box">
+        <img id="videoStream" width="640">
+    </div>
+</div>
+
+<script>
+document.getElementById("videoForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch("/set_video", {
+        method: "POST",
+        body: formData
+    }).then(() => {
+        // 🔥 Stream start AFTER video selected
+        document.getElementById("videoStream").src = "/video_feed";
+    });
+};
+</script>
+
+</body>
+</html>
